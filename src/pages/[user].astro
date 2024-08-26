@@ -1,0 +1,98 @@
+---
+import Bio from "../components/Bio.astro";
+import Card from "../components/Card.astro";
+import {Icon} from "astro-icon/components";
+import Social from "../components/Social.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import "../styles/global.css";
+import type { GetStaticPaths } from "astro";
+import { getUsersProfiles } from "../services/Profiles";
+
+
+export const getStaticPaths = (() => {
+    const profiles = getUsersProfiles()
+
+    return profiles.map(profile=>({
+        params:{user:profile.id},
+        props:profile
+    }))
+   
+}) satisfies GetStaticPaths;
+
+const {links,social,name,picture,text} = Astro.props
+---
+<BaseLayout>
+    <div class="wraper">
+        <div class="container">
+            <Bio name={name} picture={picture} text={text}/>
+            <ul class="social-container">
+                {
+                    social.map(s=>(
+                        <li>
+                        <Social link={s.link}>
+                            <Icon name={s.icon} width={"100%"} height={"100%"}/>
+                        </Social>
+                    </li>        
+                    ))
+                }                              
+                    
+            </ul>
+            <ul class="cards-container">
+                {
+                    links.map(l=>(
+                        <li style={{gridColumn:`span ${l.span}`}}>
+                            <Card link={l.link} text={l.text} image={l.image}/>        
+                        </li>        
+                    ))
+                }
+               
+            </ul>
+        </div>    
+    </div>
+    
+</BaseLayout>
+
+<style>
+    .wraper{
+        color: #fff;
+        display: grid;
+        place-items: center;
+        background-color: rgb(26 91 127);      
+    }
+    .container{
+        background-color: rgb(26 91 127);
+        max-width: 42rem;
+        min-height: 100vh;
+        padding: 1rem;
+        box-shadow: 0 1px 4px rgb(9, 31, 43);
+    }
+    .social-container{
+        list-style: none;
+        display: flex;
+        justify-content: center;
+        gap: 12px;
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+    }
+    .cards-container{
+        list-style: none;
+        display: grid;
+        gap: 1rem;
+        grid-template-columns: repeat(3,1fr);
+    }
+    @media screen and (min-width:30rem) {
+        .container{
+            padding: 1rem 4rem 2rem;          
+        }       
+    }
+    @media screen and (min-width:46rem) {
+        .container{
+            border-radius: 1rem;
+        }
+        .wraper{
+            background-color: rgb(213, 226, 233);
+            padding-top: 1rem;   
+            padding-bottom: 2rem;       
+        }
+    }
+</style>

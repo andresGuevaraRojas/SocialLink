@@ -1,0 +1,78 @@
+---
+import { Image } from "astro:assets";
+import {Icon} from "astro-icon/components";
+
+const {link,text,image} = Astro.props
+---
+<>
+    {image?
+    <div class="container">
+        <a href={link} target="_blank" class="link">        
+            <Image src={image} alt={"card"} />
+            <div class="content-image">
+                <span>{text}</span>
+            </div>        
+        </a>    
+    </div>:
+    <div class="container">
+        <a href={link} target="_blank" class="link">                    
+            <div class="content">
+                <Icon name="link"/>
+                <span>{text}</span>
+            </div>        
+        </a>    
+    </div>
+    }
+</>
+
+
+
+
+<style>
+    .container{        
+        width: 100%;       
+    }
+    .link{
+        position: relative;
+        display: block;
+        width: 100%;
+        text-decoration: none;
+        color: white;
+        border-radius: 0.5rem
+    }
+    img{
+        max-width: 100%;     
+        height: auto;
+        display: block;   
+        border-radius: 0.5rem;
+    }
+    .content-image{
+        position: absolute;
+        width: 100%;       
+        bottom: 0;
+        display: flex;
+        align-items: flex-end;  
+        padding: 0.5rem;
+        border-bottom-left-radius: 0.5rem;
+        border-bottom-right-radius: 0.5rem;
+        background-color: rgba(0, 0, 0, 0.8);
+    }    
+    .content-image span{
+            
+        display: block;
+        width: 100%;      
+    }
+    .content{
+        background-color:rgba(0, 0, 0, 0.8);
+        padding: 1rem;
+        border-radius: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+    }
+    .container:hover{
+        position: relative;
+        transform: translateY(-5px);
+        transition:  all ease-in-out 300ms;
+    }
+</style>

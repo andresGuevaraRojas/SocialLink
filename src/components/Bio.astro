@@ -1,0 +1,27 @@
+---
+import { Image } from 'astro:assets'
+const {picture,name,text} = Astro.props
+---
+
+<section>
+    <Image src={picture} alt={"profile photo"}/>
+    <h1>{name}</h1>
+    <p>{text}</p>
+</section>
+
+<style>
+    section{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    img{
+        display: block;
+        border-radius: 100%;
+        width: 100px;
+        height: 100px;
+        margin-bottom: 0.6rem;
+        object-fit: cover;
+    }
+</style>
+
