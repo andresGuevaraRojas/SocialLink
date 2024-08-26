@@ -21,7 +21,7 @@ export const getStaticPaths = (() => {
 
 const {links,social,name,picture,text} = Astro.props
 ---
-<BaseLayout>
+<BaseLayout title = {name}>
     <div class="wraper">
         <div class="container">
             <Bio name={name} picture={picture} text={text}/>
