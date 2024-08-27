@@ -1,9 +1,115 @@
 ---
+import "../styles/global.css";
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { getUsersProfiles } from "../services/Profiles";
+import FeatureProfile from "../components/FeatureProfile.astro";
 
+const profiles = getUsersProfiles()
 
 ---
 
-<BaseLayout>
-	<h1>Hello</h1>
+<BaseLayout title = {"Bio Link"}>
+	<div class="wraper">
+		<section class="copy">
+			<h1 class="title">Social Link</h1>
+			<p class="slogan">Todos tus sitios en un solo lugar</p>	
+		</section>	
+		<main>
+			<h3 class="profiles-title">Perfiles destacados</h3>
+			<section class="profiles-container">
+				{
+					profiles.map(profile=>(					
+						<FeatureProfile name={profile.name} picture={profile.picture} id={profile.id}/>								
+					))
+				}
+			</section>
+			
+		</main>
+	</div>
+	
 </BaseLayout>
+
+<style>
+	.wraper{		
+		min-height: 100vh;
+		display: grid;
+		grid-template-rows: auto 1fr;
+		background-color: rgba(238, 247, 255,0.4);
+	}
+	.copy, main{
+		padding: 1rem;
+	}
+	.copy{
+		background-color: rgb(26 91 127);		
+		color: white;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.title{
+		font-size: 2rem;	
+	}
+
+	.slogan{
+		font-size: 1rem;
+	}
+
+	main{				
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 1rem;
+	}
+	
+	.profiles-container{
+		display: flex;
+		flex-direction: column;
+		gap: 2rem;
+	}
+	.profiles-title{
+		font-size: 1.6rem;
+		color: rgb(3,55,149);
+		font-weight: bold;
+	}
+
+	@media screen and (min-width:42rem) {
+		.wraper{			
+			grid-template-columns: repeat(2,1fr);
+			grid-template-rows: unset;
+			padding: 2rem;			
+		}
+
+		.copy, main{
+		padding: 2rem;
+		}
+
+		.copy{
+			background-color: rgb(26 91 127);
+			border-radius: 1rem 0 0 1rem;
+			color: white;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+		}
+
+		.title{
+			font-size: 2.5rem;	
+		}
+
+		.slogan{
+			font-size: 1.25rem
+		}
+		main{
+			box-shadow: 0 1px 4px rgba(26, 27, 27, 0.2);
+			border-radius: 0 1rem 1rem 0;
+			justify-content: center;
+			gap: 2rem;			
+		}
+		.profiles-container{
+			flex-direction: row;
+		}
+	}
+</style>
